@@ -249,6 +249,8 @@ samples_per_frame = int(config.MIC_RATE / config.FPS)
 y_roll = np.random.rand(config.N_ROLLING_HISTORY, samples_per_frame) / 1e16
 
 visualization_effect = visualize_spectrum
+#visualization_effect = visualize_energy
+#visualization_effect = visualize_scroll
 """Visualization effect to display on the LED strip"""
 
 

@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  visualizer:
+    build:
+      context: .
+    devices:
+      - /dev/snd:/dev/snd
+    privileged: true
+    
