@@ -1,0 +1,8 @@
+Adafruit-Blinka==5.4.0
+Adafruit-PlatformDetect==2.17.0
+Adafruit-PureIO==1.1.5
+pyserial==3.4
+pyusb==1.1.0
+rpi-ws281x==4.2.4
+RPi.GPIO==0.7.0
+sysv-ipc==1.0.1
