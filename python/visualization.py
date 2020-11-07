@@ -185,8 +185,8 @@ class AudioLEDVisualization:
         vol = np.max(np.abs(self.y_data))
         if vol < config.MIN_VOLUME_THRESHOLD:
             print('No audio input. Volume below threshold. Volume:', vol)
-            led.pixels = np.tile(0, (3, config.N_PIXELS))
-            led.update()
+            self.leds.pixels = np.tile(0, (3, config.N_PIXELS))
+            self.leds.update()
         else:
             # Transform audio input into the frequency domain
             N = len(self.y_data)
@@ -207,8 +207,8 @@ class AudioLEDVisualization:
             mel = self.mel_smoothing.update(mel)
             # Map filterbank output onto LED strip
             output = self.visualization_effect(mel)
-            led.pixels = output
-            led.update()
+            self.leds.pixels = output
+            self.leds.update()
         if config.DISPLAY_FPS:
             fps = self.frames_per_second()
             if time.time() - 0.5 > self.prev_fps_update:
