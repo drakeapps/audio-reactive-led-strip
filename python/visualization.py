@@ -174,7 +174,6 @@ class AudioLEDVisualization:
 
 
     def microphone_update(self, audio_samples):
-        global y_roll, prev_rms, prev_exp, prev_fps_update
         # Normalize samples between 0 and 1
         y = audio_samples / 2.0**15
         # Construct a rolling window of audio samples
@@ -211,8 +210,8 @@ class AudioLEDVisualization:
             led.update()
         if config.DISPLAY_FPS:
             fps = self.frames_per_second()
-            if time.time() - 0.5 > prev_fps_update:
-                prev_fps_update = time.time()
+            if time.time() - 0.5 > self.prev_fps_update:
+                self.prev_fps_update = time.time()
                 print('FPS {:.0f} / {:.0f}'.format(fps, config.FPS))
 
 
