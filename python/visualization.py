@@ -70,24 +70,6 @@ class AudioLEDVisualization:
             return self._fps.value
         return self._fps.update(1000.0 / dt)
 
-
-    def memoize(self, function):
-        """Provides a decorator for memoizing functions"""
-        from functools import wraps
-        memo = {}
-
-        @wraps(function)
-        def wrapper(*args):
-            if args in memo:
-                return memo[args]
-            else:
-                rv = function(*args)
-                memo[args] = rv
-                return rv
-        return wrapper
-
-
-    @memoize
     def _normalized_linspace(self, size):
         return np.linspace(0, 1, size)
 
