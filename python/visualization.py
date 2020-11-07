@@ -50,7 +50,7 @@ class AudioLEDVisualization:
         self.samples_per_frame = int(config.MIC_RATE / config.FPS)
 
         # Array containing the rolling audio sample window
-        self.y_roll = np.random.rand(config.N_ROLLING_HISTORY, samples_per_frame) / 1e16
+        self.y_roll = np.random.rand(config.N_ROLLING_HISTORY, self.samples_per_frame) / 1e16
 
         if effect == "energy":
             self.visualization_effect = self.visualize_energy
