@@ -127,7 +127,7 @@ class AudioLEDVisualization:
         g = int(np.max(y[len(y) // 3: 2 * len(y) // 3]))
         b = int(np.max(y[2 * len(y) // 3:]))
         # Scrolling effect window
-        self.p[:, 1:] = p[:, :-1]
+        self.p[:, 1:] = self.p[:, :-1]
         p *= 0.98
         p = gaussian_filter1d(p, sigma=0.2)
         # Create new color originating at the center
