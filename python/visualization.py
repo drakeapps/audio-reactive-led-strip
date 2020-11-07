@@ -11,7 +11,8 @@ import led
 
 class AudioLEDVisualization:
 
-    def __init__(self):         
+    def __init__(self, leds):
+        self.leds = leds  
         self._time_prev = time.time() * 1000.0
         """The previous time that the frames_per_second() function was called"""
 
@@ -65,7 +66,7 @@ class AudioLEDVisualization:
         """
         time_now = time.time() * 1000.0
         dt = time_now - self._time_prev
-        _time_prev = time_now
+        self._time_prev = time_now
         if dt == 0.0:
             return self._fps.value
         return self._fps.update(1000.0 / dt)
@@ -229,7 +230,8 @@ class AudioLEDVisualization:
 
 if __name__ == '__main__':
     # Initialize LEDs
-    led.update()
+    leds = led.LED()
+    leds.update()
     # Start listening to live audio stream
-    audio = AudioLEDVisualization()
+    audio = AudioLEDVisualization(leds)
     microphone.start_stream(audio.microphone_update)
