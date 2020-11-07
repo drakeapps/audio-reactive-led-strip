@@ -128,14 +128,14 @@ class AudioLEDVisualization:
         b = int(np.max(y[2 * len(y) // 3:]))
         # Scrolling effect window
         self.p[:, 1:] = self.p[:, :-1]
-        p *= 0.98
-        p = gaussian_filter1d(p, sigma=0.2)
+        self.p *= 0.98
+        self.p = gaussian_filter1d(self.p, sigma=0.2)
         # Create new color originating at the center
-        p[0, 0] = r
-        p[1, 0] = g
-        p[2, 0] = b
+        self.p[0, 0] = r
+        self.p[1, 0] = g
+        self.p[2, 0] = b
         # Update the LED strip
-        return np.concatenate((p[:, ::-1], p), axis=1)
+        return np.concatenate((self.p[:, ::-1], self.p), axis=1)
 
 
     def visualize_energy(self, y):
@@ -157,12 +157,12 @@ class AudioLEDVisualization:
         self.p[1, g:] = 0.0
         self.p[2, :b] = 255.0
         self.p[2, b:] = 0.0
-        self.p_filt.update(p)
+        self.p_filt.update(self.p)
         self.p = np.round(self.p_filt.value)
         # Apply substantial blur to smooth the edges
-        self.p[0, :] = gaussian_filter1d(p[0, :], sigma=4.0)
-        self.p[1, :] = gaussian_filter1d(p[1, :], sigma=4.0)
-        self.p[2, :] = gaussian_filter1d(p[2, :], sigma=4.0)
+        self.p[0, :] = gaussian_filter1d(self.p[0, :], sigma=4.0)
+        self.p[1, :] = gaussian_filter1d(self.p[1, :], sigma=4.0)
+        self.p[2, :] = gaussian_filter1d(self.p[2, :], sigma=4.0)
         # Set the new pixel value
         return np.concatenate((self.p[:, ::-1], self.p), axis=1)
 
