@@ -11,10 +11,15 @@ COPY build/asound.conf /etc/asound.conf
 RUN sed -i "s|defaults.ctl.card 0|defaults.ctl.card 1|g" /usr/share/alsa/alsa.conf
 RUN sed -i "s|defaults.pcm.card 0|defaults.pcm.card 1|g" /usr/share/alsa/alsa.conf
 
-COPY python /code/python
+COPY python/requirements.txt /code/python/requirements.txt
 
 WORKDIR /code/python
 
 RUN pip3 install -r requirements.txt --force-reinstall
+
+COPY python /code/python
+
+WORKDIR /code/python
+
 
 CMD python3 visualization.py
