@@ -11,7 +11,7 @@ import led
 
 class AudioLEDVisualization:
 
-    def __init__(self, leds):
+    def __init__(self, leds, effect="spectrum"):
         self.leds = leds  
         self._time_prev = time.time() * 1000.0
         """The previous time that the frames_per_second() function was called"""
@@ -45,6 +45,20 @@ class AudioLEDVisualization:
                             alpha_decay=0.02, alpha_rise=0.02)
         self.fft_window = np.hamming(int(config.MIC_RATE / config.FPS) * config.N_ROLLING_HISTORY)
         self.prev_fps_update = time.time()
+
+         # Number of audio samples to read every time frame
+        self.samples_per_frame = int(config.MIC_RATE / config.FPS)
+
+        # Array containing the rolling audio sample window
+        self.y_roll = np.random.rand(config.N_ROLLING_HISTORY, samples_per_frame) / 1e16
+
+        if effect == "energy":
+            self.visualization_effect = self.visualize_energy
+        elif effect == "scroll":
+            self.visualization_effect = self.visualize_scroll
+        else:
+            self.visualization_effect = self.visualize_spectrum
+        """Visualization effect to display on the LED strip"""
 
 
     def frames_per_second(self):
@@ -216,22 +230,10 @@ class AudioLEDVisualization:
                 print('FPS {:.0f} / {:.0f}'.format(fps, config.FPS))
 
 
-    # Number of audio samples to read every time frame
-    samples_per_frame = int(config.MIC_RATE / config.FPS)
-
-    # Array containing the rolling audio sample window
-    y_roll = np.random.rand(config.N_ROLLING_HISTORY, samples_per_frame) / 1e16
-
-    visualization_effect = visualize_spectrum
-    #visualization_effect = visualize_energy
-    #visualization_effect = visualize_scroll
-    """Visualization effect to display on the LED strip"""
-
-
 if __name__ == '__main__':
     # Initialize LEDs
     leds = led.LED()
     leds.update()
     # Start listening to live audio stream
-    audio = AudioLEDVisualization(leds)
+    audio = AudioLEDVisualization(leds, effect="scroll")
     microphone.start_stream(audio.microphone_update)
