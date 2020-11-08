@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="AudioReactiveLEDStrip", # Replace with your own username
+    name="AudioReactiveLEDStrip",
     version="1.0.0",
     author="James Wilson",
     author_email="james@drakeapps.com",
