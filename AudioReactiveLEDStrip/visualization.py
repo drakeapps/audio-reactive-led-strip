@@ -3,10 +3,10 @@ from __future__ import division
 import time
 import numpy as np
 from scipy.ndimage.filters import gaussian_filter1d
-import config
-import microphone
-import dsp
-import led
+from AudioReactiveLEDStrip import config
+from AudioReactiveLEDStrip import microphone
+from AudioReactiveLEDStrip import dsp
+from AudioReactiveLEDStrip import led
 
 
 class AudioLEDVisualization:

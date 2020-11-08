@@ -6,3 +6,8 @@ pyusb==1.1.0
 rpi-ws281x==4.2.4
 RPi.GPIO==0.7.0
 sysv-ipc==1.0.1
+# install libatlas-base-dev via apt-get
+numpy==1.19.4
+# install portaudio19-dev via apt-get
+PyAudio==0.2.11
+scipy==1.5.4

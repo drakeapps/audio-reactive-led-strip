@@ -1,7 +1,7 @@
 import time
 import numpy as np
 import pyaudio
-import config
+from AudioReactiveLEDStrip import config
 
 
 def start_stream(callback):

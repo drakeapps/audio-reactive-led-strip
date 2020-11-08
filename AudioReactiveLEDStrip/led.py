@@ -3,7 +3,7 @@ from __future__ import division
 
 import platform
 import numpy as np
-import config
+from AudioReactiveLEDStrip import config
 
 import rpi_ws281x as neopixel
 

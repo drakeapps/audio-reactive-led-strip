@@ -11,7 +11,7 @@ COPY build/asound.conf /etc/asound.conf
 RUN sed -i "s|defaults.ctl.card 0|defaults.ctl.card 1|g" /usr/share/alsa/alsa.conf
 RUN sed -i "s|defaults.pcm.card 0|defaults.pcm.card 1|g" /usr/share/alsa/alsa.conf
 
-COPY AudioReactiveLEDStrip/requirements.txt /code/python/requirements.txt
+COPY requirements.txt /code/python/requirements.txt
 
 WORKDIR /code/python
 
