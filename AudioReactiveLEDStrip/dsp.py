@@ -1,7 +1,7 @@
 from __future__ import print_function
 import numpy as np
 from AudioReactiveLEDStrip import config
-import melbank
+from AudioReactiveLEDStrip import melbank
 
 
 class ExpFilter:
