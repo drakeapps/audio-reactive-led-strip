@@ -1,7 +1,7 @@
 FROM balenalib/raspberrypi3:buster
 
 RUN apt-get update && apt-get install -y \
-	python3 python3-pip python3-numpy python3-scipy python3-pyaudio build-essential
+	python3 python3-pip python3-dev python3-setuptools build-essential git python3-pyaudio python3-numpy python3-scipy libatlas-base-dev
 
 # fix the numpy build
 # RUN pip3 install 'numpy==1.16' --force-reinstall
