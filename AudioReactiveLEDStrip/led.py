@@ -3,25 +3,47 @@ from __future__ import division
 
 import platform
 import numpy as np
-from AudioReactiveLEDStrip import config
+import os
 
 import rpi_ws281x as neopixel
 
 class LED:
 
-    def __init__(self):
-        self.strip = neopixel.Adafruit_NeoPixel(config.N_PIXELS, config.LED_PIN,
-                                       config.LED_FREQ_HZ, config.LED_DMA,
-                                       config.LED_INVERT, config.BRIGHTNESS)
+    def __init__(self,
+        n_pixels=100,
+        led_pin=18,
+        led_freq_hz=800000,
+        led_dma=5,
+        brightness=255,
+        led_invert=False,
+        software_gamma_correction=True,
+        gamma_table_path=None
+        ):
+
+        self.N_PIXELS = n_pixels
+        self.LED_PIN = led_pin
+        self.LED_FREQ_HZ = led_freq_hz
+        self.LED_DMA = led_dma
+        self.LED_INVERT = led_invert
+        self.BRIGHTNESS = brightness
+        self.SOFTWARE_GAMMA_CORRECTION = software_gamma_correction
+        if gamma_table_path:
+            self.GAMMA_TABLE_PATH = gamma_table_path
+        else:
+            self.GAMMA_TABLE_PATH = os.path.join(os.path.dirname(__file__), 'gamma_table.npy')
+
+        self.strip = neopixel.Adafruit_NeoPixel(self.N_PIXELS, self.LED_PIN,
+                                       self.LED_FREQ_HZ, self.LED_DMA,
+                                       self.LED_INVERT, self.BRIGHTNESS)
         self.strip.begin()
 
-        self._gamma = np.load(config.GAMMA_TABLE_PATH)
+        self._gamma = np.load(self.GAMMA_TABLE_PATH)
         """Gamma lookup table used for nonlinear brightness correction"""
 
-        self._prev_pixels = np.tile(253, (3, config.N_PIXELS))
+        self._prev_pixels = np.tile(253, (3, self.N_PIXELS))
         """Pixel values that were most recently displayed on the LED strip"""
 
-        self.pixels = np.tile(1, (3, config.N_PIXELS))
+        self.pixels = np.tile(1, (3, self.N_PIXELS))
         """Pixel values for the LED strip"""
 
     def _update_pi(self):
@@ -33,14 +55,14 @@ class LED:
         # Truncate values and cast to integer
         self.pixels = np.clip(self.pixels, 0, 255).astype(int)
         # Optional gamma correction
-        p = self._gamma[self.pixels] if config.SOFTWARE_GAMMA_CORRECTION else np.copy(self.pixels)
+        p = self._gamma[self.pixels] if self..SOFTWARE_GAMMA_CORRECTION else np.copy(self.pixels)
         # Encode 24-bit LED values in 32 bit integers
         r = np.left_shift(p[0][:].astype(int), 8)
         g = np.left_shift(p[1][:].astype(int), 16)
         b = p[2][:].astype(int)
         rgb = np.bitwise_or(np.bitwise_or(r, g), b)
         # Update the pixels
-        for i in range(config.N_PIXELS):
+        for i in range(self.N_PIXELS):
             # Ignore pixels if they haven't changed (saves bandwidth)
             if np.array_equal(p[:, i], self._prev_pixels[:, i]):
                 continue

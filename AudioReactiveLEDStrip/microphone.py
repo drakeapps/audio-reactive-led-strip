@@ -1,15 +1,13 @@
 import time
 import numpy as np
 import pyaudio
-from AudioReactiveLEDStrip import config
 
-
-def start_stream(callback):
+def start_stream(callback, mic_rate=44100, fps=60):
     p = pyaudio.PyAudio()
-    frames_per_buffer = int(config.MIC_RATE / config.FPS)
+    frames_per_buffer = int(mic_rate / fps)
     stream = p.open(format=pyaudio.paInt16,
                     channels=1,
-                    rate=config.MIC_RATE,
+                    rate=mic_rate,
                     input=True,
                     frames_per_buffer=frames_per_buffer)
     overflows = 0
