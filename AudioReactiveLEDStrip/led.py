@@ -55,7 +55,7 @@ class LED:
         # Truncate values and cast to integer
         self.pixels = np.clip(self.pixels, 0, 255).astype(int)
         # Optional gamma correction
-        p = self._gamma[self.pixels] if self..SOFTWARE_GAMMA_CORRECTION else np.copy(self.pixels)
+        p = self._gamma[self.pixels] if self.SOFTWARE_GAMMA_CORRECTION else np.copy(self.pixels)
         # Encode 24-bit LED values in 32 bit integers
         r = np.left_shift(p[0][:].astype(int), 8)
         g = np.left_shift(p[1][:].astype(int), 16)
