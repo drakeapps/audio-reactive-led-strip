@@ -2,6 +2,8 @@ import time
 import numpy as np
 import pyaudio
 
+CONTINUE_MIC_STREAM = True
+
 def start_stream(callback, mic_rate=44100, fps=60):
     p = pyaudio.PyAudio()
     frames_per_buffer = int(mic_rate / fps)
@@ -12,7 +14,7 @@ def start_stream(callback, mic_rate=44100, fps=60):
                     frames_per_buffer=frames_per_buffer)
     overflows = 0
     prev_ovf_time = time.time()
-    while True:
+    while CONTINUE_MIC_STREAM:
         try:
             y = np.fromstring(stream.read(frames_per_buffer, exception_on_overflow=False), dtype=np.int16)
             y = y.astype(np.float32)
