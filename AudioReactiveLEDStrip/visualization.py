@@ -341,4 +341,5 @@ if __name__ == '__main__':
     leds.update()
     # Start listening to live audio stream
     audio = AudioLEDVisualization(leds, effect="scroll")
-    microphone.start_stream(audio.microphone_update, mic_rate=audio.MIC_RATE, fps=audio.FPS)
+    mic = microphone.Microphone()
+    mic.start_stream(audio.microphone_update, mic_rate=audio.MIC_RATE, fps=audio.FPS)
