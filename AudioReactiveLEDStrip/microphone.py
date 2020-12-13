@@ -13,7 +13,7 @@ class Microphone:
         global CONTINUE_MIC_STREAM
         self.p = pyaudio.PyAudio()
         frames_per_buffer = int(mic_rate / fps)
-        self.stream = p.open(format=pyaudio.paInt16,
+        self.stream = self.p.open(format=pyaudio.paInt16,
                         channels=1,
                         rate=mic_rate,
                         input=True,
@@ -41,6 +41,6 @@ class Microphone:
         self.continue_mic_stream = False
         if self.stream:
             self.stream.stop_stream()
-            self.stream_close()
+            self.stream.close()
         if self.p:
             self.p.terminate()
