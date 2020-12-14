@@ -49,13 +49,19 @@ class Microphone:
 
     def stop_stream(self):
         self.continue_mic_stream = False
-        time.sleep
+        time.sleep(1)
         if self.stream:
-            self.stream.stop_stream()
-            self.stream.close()
-            del self.stream
-            self.stream = None
+            try:
+                self.stream.stop_stream()
+                self.stream.close()
+                del self.stream
+                self.stream = None
+            except:
+                pass
         if self.p:
-            self.p.terminate()
-            del self.p
-            self.p = None
+            try:
+                self.p.terminate()
+                del self.p
+                self.p = None
+            except:
+                pass
